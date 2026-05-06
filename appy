@@ -1,0 +1,31 @@
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/produk')
+def produk():
+    products = [
+        {"nama": "Vintage Garden", "deskripsi": "Ilustrasi taman klasik", "harga": "Rp25.000"},
+        {"nama": "Old Town Sketch", "deskripsi": "Kota jadul detail", "harga": "Rp30.000"},
+        {"nama": "Fantasy Ink", "deskripsi": "Dunia imajinasi klasik", "harga": "Rp35.000"}
+    ]
+    return render_template('produk.html', products=products)
+
+@app.route('/kontak', methods=['GET', 'POST'])
+def kontak():
+    if request.method == 'POST':
+        nama = request.form['nama']
+        email = request.form['email']
+        return render_template('hasil.html', nama=nama, email=email)
+    return render_template('kontak.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
